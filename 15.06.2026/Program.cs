@@ -41,6 +41,12 @@ namespace _15._06._2026
                 MyList["100 years of solitude"].Author = "test author";
                 Console.WriteLine(MyList["100 years of solitude"].Author);
                 Console.WriteLine(MyList.Contains("Harry Potter and philosopher's stone"));
+                Console.WriteLine("Додаємо нову книгу в список");
+                MyList.Add(new Book("1984", "George Orwell", "Dystopia", 328));
+                MyList.ShowInfo();
+                Console.WriteLine("Додаємо книгу з списку");
+                MyList.Remove("Harry Potter and philosopher's stone");
+                MyList.ShowInfo();
             }
             catch (Exception ex)
             {
@@ -179,12 +185,12 @@ namespace _15._06._2026
             return a;
         }
     }
-    
+
     class BookList
     {
         Book[] book;
         public BookList(Book[] books)
-        { 
+        {
             book = books;
         }
         public Book this[int index]
@@ -196,7 +202,7 @@ namespace _15._06._2026
                 else
                     throw new IndexOutOfRangeException("Bounds Alert!!");
             }
-            set 
+            set
             {
                 if (index >= 0 && book.Length > index)
                     book[index] = value;
@@ -204,7 +210,7 @@ namespace _15._06._2026
         }
         public Book this[string name]
         {
-            get 
+            get
             {
                 foreach (var item in book)
                 {
@@ -212,9 +218,23 @@ namespace _15._06._2026
                 }
                 throw new Exception("Book not found");
             }
-                        
+
         }
-        
+        public void ShowInfo()
+        {
+            for (int i = 0; i < book.Length; i++)
+            {
+                if (book[i] != null)
+                {
+                    Console.WriteLine($"Book #{i + 1}");
+                    Console.WriteLine($"Name: {book[i].Name}");
+                    Console.WriteLine($"Author: {book[i].Author}");
+                    Console.WriteLine($"Description: {book[i].Description}");
+                    Console.WriteLine($"Pages: {book[i].pages}");
+                    Console.WriteLine(new string('-', 30));
+                }
+            }
+        }
         public bool Contains(string name)
         {
             foreach (var item in book)
@@ -224,6 +244,33 @@ namespace _15._06._2026
             }
             return false;
         }
-        
+        public void Add(Book newBook)
+        {
+            Array.Resize(ref book, book.Length + 1);
+            book[book.Length - 1] = newBook;
+        }
+        public void Remove(string name)
+        {
+            int index = -1;
+            for (int i = 0; i < book.Length; i++)
+            {
+                if (book[i] != null && book[i].Name == name)
+                {
+                    index = i;
+                    break;
+                }
+            }            
+            if (index == -1)
+            {
+                Console.WriteLine("Book not found.");
+                return;
+            }
+            for (int i = index; i < book.Length - 1; i++)
+            {
+                book[i] = book[i + 1];
+            }
+            Array.Resize(ref book, book.Length - 1);
+        }
+    
     }
 }
