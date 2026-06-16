@@ -40,6 +40,7 @@ namespace _15._06._2026
                 Console.WriteLine(MyList["100 years of solitude"].Author);
                 MyList["100 years of solitude"].Author = "test author";
                 Console.WriteLine(MyList["100 years of solitude"].Author);
+                Console.WriteLine(MyList.Contains("Harry Potter and philosopher's stone"));
             }
             catch (Exception ex)
             {
